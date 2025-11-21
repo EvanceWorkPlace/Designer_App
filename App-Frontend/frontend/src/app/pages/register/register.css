@@ -1,0 +1,53 @@
+/* Floating label */
+.floating-label {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  transition: all .18s ease;
+  color: #6b7280; /* gray-500 */
+  pointer-events: none;
+  font-size: 0.95rem;
+}
+.floating-label.active,
+.input-with-icon:focus + .floating-label,
+.input-with-icon:focus ~ .floating-label {
+  transform: translateY(-26px) scale(.95);
+  color: #fb923c; /* orange-ish */
+}
+
+/* Input with icon */
+.input-with-icon {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  outline: none;
+  transition: box-shadow .15s, border-color .15s;
+}
+.input-with-icon:focus {
+  box-shadow: 0 4px 12px rgba(255,122,0,0.08);
+  border-color: #ff9a4a;
+}
+
+/* position helpers used in template */
+.relative { position: relative; }
+.absolute { position: absolute; }
+
+/* small fade animation */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+.animate-fade { animation: fadeIn .28s ease; }
+
+/* shake animation (apply to parent when needed) */
+@keyframes shake {
+  10%, 90% { transform: translateX(-1px); }
+  20%, 80% { transform: translateX(2px); }
+  30%, 50%, 70% { transform: translateX(-4px); }
+}
+.shake { animation: shake .45s cubic-bezier(.36,.07,.19,.97); }
+
+/* strength bar transition */
+.transition-all { transition: width .45s ease, background-color .3s ease; }
+
+/* small utility for input left icon spacing */
+.pl-10 { padding-left: 2.5rem !important; }
+.pr-10 { padding-right: 2.5rem !important; }

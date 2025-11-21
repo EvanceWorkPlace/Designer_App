@@ -1,39 +1,59 @@
-<div class="min-h-screen flex items-center justify-center bg-gray-50 p-4">
-  <div class="w-full max-w-md bg-white rounded-xl shadow p-8">
-    <h2 class="text-2xl font-bold mb-4 text-center">Create an account</h2>
+<div class="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+  <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-lg border-t-4 border-orange-500">
 
-    <div *ngIf="error" class="text-red-600 mb-3 text-sm">{{ error }}</div>
+    <h2 class="text-3xl font-bold text-center text-orange-600 mb-6">
+      Create Your Account
+    </h2>
 
-    <form (ngSubmit)="submit(); $event.preventDefault()" class="space-y-4">
-      <div>
-        <label class="block text-sm text-gray-700">Username</label>
-        <input name="username" [(ngModel)]="form.username" required class="mt-1 block w-full p-3 border rounded-lg" />
-      </div>
+    <div *ngIf="error" class="text-red-600 mb-4 text-sm text-center">
+      {{ error }}
+    </div>
 
-      <div>
-        <label class="block text-sm text-gray-700">Email</label>
-        <input name="email" type="email" [(ngModel)]="form.email" required class="mt-1 block w-full p-3 border rounded-lg" />
-      </div>
+   
 
-      <div>
-        <label class="block text-sm text-gray-700">Password</label>
-        <input name="password" type="password" [(ngModel)]="form.password" required class="mt-1 block w-full p-3 border rounded-lg" />
-      </div>
+    <form (submit)="submit(); $event.preventDefault()">
 
-      <div>
-        <label class="block text-sm text-gray-700">Confirm Password</label>
-        <input name="password2" type="password" [(ngModel)]="form.password2" required class="mt-1 block w-full p-3 border rounded-lg" />
-      </div>
+     
 
-      <button type="submit" [disabled]="loading" class="w-full py-3 rounded-lg bg-green-600 text-white">
-        <span *ngIf="!loading">Register</span>
-        <span *ngIf="loading">Creating…</span>
+      <!-- Username -->
+      <label class="block mb-4">
+        <span class="text-gray-700">Username</span>
+        <input [(ngModel)]="form.username" name="username"
+               class="mt-1 block w-full border p-3 rounded-lg focus:ring-2 focus:ring-orange-400" required>
+      </label>
+
+      <!-- Email -->
+      <label class="block mb-4">
+        <span class="text-gray-700">Email</span>
+        <input type="email" [(ngModel)]="form.email" name="email"
+               class="mt-1 block w-full border p-3 rounded-lg focus:ring-2 focus:ring-orange-400" required>
+      </label>
+
+      <!-- Password -->
+      <label class="block mb-4">
+        <span class="text-gray-700">Password</span>
+        <input type="password" [(ngModel)]="form.password" name="password"
+               class="mt-1 block w-full border p-3 rounded-lg focus:ring-2 focus:ring-orange-400" required>
+      </label>
+
+      <!-- Confirm Password -->
+      <label class="block mb-6">
+        <span class="text-gray-700">Confirm Password</span>
+        <input type="password" [(ngModel)]="form.password2" name="password2"
+               class="mt-1 block w-full border p-3 rounded-lg focus:ring-2 focus:ring-orange-400" required>
+      </label>
+
+      <button type="submit"
+              class="w-full py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 active:scale-95 transition font-semibold shadow-lg">
+        <span *ngIf="!loading">Create Account</span>
+        <span *ngIf="loading">Processing...</span>
       </button>
     </form>
 
-    <p class="text-center text-sm mt-4">
+    <p class="mt-4 text-center text-sm">
       Already have an account?
-      <a routerLink="/login" class="text-indigo-600 font-medium">Sign in</a>
+      <a routerLink="/login" class="text-orange-600 font-semibold hover:underline">Login</a>
     </p>
+
   </div>
 </div>

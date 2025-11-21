@@ -1,38 +1,40 @@
-<div class="h-screen flex items-center justify-center bg-gray-100 px-4">
-  <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
-    
-    <h2 class="text-2xl font-bold mb-6 text-center">
-      Login to your account
+<div class="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+  <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-lg border-t-4 border-orange-500">
+
+    <h2 class="text-3xl font-bold text-center text-orange-600 mb-6">
+      Welcome Back
     </h2>
 
-    <div *ngIf="error" class="mb-4 text-red-600 text-sm">
+    <div *ngIf="error" class="text-red-600 mb-4 text-sm text-center">
       {{ error }}
     </div>
 
     <form (submit)="submit(); $event.preventDefault()">
 
-      <label class="block mb-4">
-        <span class="text-gray-700">Email</span>
-        <input type="email" [(ngModel)]="form.email" name="email"
-               class="mt-1 block w-full border p-3 rounded-lg" required>
+      <!-- Username or Email -->
+      <label class="block mb-5">
+        <span class="text-gray-700">Username or Email</span>
+        <input [(ngModel)]="form.username" name="username"
+               class="mt-1 block w-full border p-3 rounded-lg focus:ring-2 focus:ring-orange-400" required>
       </label>
 
+      <!-- Password -->
       <label class="block mb-6">
         <span class="text-gray-700">Password</span>
         <input type="password" [(ngModel)]="form.password" name="password"
-               class="mt-1 block w-full border p-3 rounded-lg" required>
+               class="mt-1 block w-full border p-3 rounded-lg focus:ring-2 focus:ring-orange-400" required>
       </label>
 
       <button type="submit"
-              class="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+              class="w-full py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 active:scale-95 transition font-semibold shadow-lg">
         <span *ngIf="!loading">Login</span>
-        <span *ngIf="loading">Processing...</span>
+        <span *ngIf="loading">Authenticating...</span>
       </button>
     </form>
 
     <p class="mt-4 text-center text-sm">
       Don't have an account?
-      <a routerLink="/register" class="text-blue-600">Register</a>
+      <a routerLink="/register" class="text-orange-600 font-semibold hover:underline">Create one</a>
     </p>
 
   </div>

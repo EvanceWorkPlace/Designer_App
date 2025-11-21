@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { tap, map } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private api = 'http://localhost:8000/api/accounts'; // change to your backend
+
+  private api = 'http://localhost:8000/api/accounts';
 
   constructor(private http: HttpClient) {}
 
-  login(credentials: { username?:string; email?:string; password:string }) {
-    // SimpleJWT expects username & password by default. If you use email, your backend must support it.
+  login(credentials: { username?: string; email?: string; password: string }) {
     return this.http.post<any>(`${this.api}/login/`, credentials).pipe(
       tap(res => {
         if (res?.access) localStorage.setItem('access_token', res.access);
@@ -27,9 +27,9 @@ export class AuthService {
     const refresh = localStorage.getItem('refresh_token');
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
-    // optional: call backend logout to blacklist refresh
+
     if (refresh) {
-      this.http.post(`${this.api}/logout/`, { refresh }).subscribe({ next: () => {}, error: () => {} });
+      this.http.post(`${this.api}/logout/`, { refresh }).subscribe();
     }
   }
 
@@ -52,4 +52,8 @@ export class AuthService {
   isAuthenticated(): boolean {
     return !!this.getAccessToken();
   }
+  getMe() {
+  return this.http.get(`${this.api}/me/`);
+}
+
 }
