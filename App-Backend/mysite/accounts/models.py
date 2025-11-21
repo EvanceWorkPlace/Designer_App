@@ -10,6 +10,8 @@ class Profile(models.Model):
         return self.user.username
     
 
+    
+
 class Design(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='designs')
     title = models.CharField(max_length=200, blank=True)
