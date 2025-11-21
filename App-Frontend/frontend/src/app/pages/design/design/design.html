@@ -1,0 +1,38 @@
+<div class="min-h-screen bg-gray-50 p-6">
+  <div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow">
+    <h2 class="text-2xl font-bold mb-4">Design your cloth</h2>
+
+    <div *ngIf="message" class="mb-4 text-sm text-green-600">{{ message }}</div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      <div>
+        <label class="block text-sm">Title</label>
+        <input [(ngModel)]="title" name="title" class="mt-1 block w-full p-3 border rounded-lg" />
+
+        <label class="block text-sm mt-4">Pick a color</label>
+        <input type="color" [(ngModel)]="selectedColor" name="selectedColor" class="mt-2 h-12 w-24" />
+        <div class="mt-4 p-4 rounded border" [style.background]="selectedColor">
+          <p class="text-white">Color preview</p>
+        </div>
+
+        <label class="block text-sm mt-4">Notes for maker</label>
+        <textarea [(ngModel)]="notes" name="notes" class="mt-1 block w-full p-3 border rounded-lg"></textarea>
+      </div>
+
+      <div>
+        <label class="block text-sm">Upload drawing / logo</label>
+        <input type="file" (change)="onFile($event)" class="mt-2" />
+        <div *ngIf="previewUrl" class="mt-4">
+          <img [src]="previewUrl" class="max-h-56 rounded shadow" />
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-6">
+      <button (click)="submitDesign()" [disabled]="loading"
+        class="px-6 py-2 bg-indigo-600 text-white rounded-lg">
+        {{ loading ? 'Uploading...' : 'Submit Design' }}
+      </button>
+    </div>
+  </div>
+</div>
