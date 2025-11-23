@@ -15,6 +15,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      
       # ---------------------------
       # FRONTEND (ANGULAR)
       # ---------------------------
@@ -22,16 +23,33 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "22"
-          cache: "npm"   # Removed cache-dependency-path because it was causing errors
+
+      # FIX 1: Restore npm cache
+      - name: Restore npm cache
+        uses: actions/cache/restore@v3
+        id: npm-cache
+        with:
+          path: App-Frontend/Frontend/node_modules
+          key: ${{ runner.os }}-npm-${{ hashFiles('App-Frontend/Frontend/package-lock.json') }}
+          restore-keys: ${{ runner.os }}-npm-
 
       - name: Install Frontend dependencies
         working-directory: App-Frontend/Frontend
         run: npm install
 
+      # FIX 2: Save npm cache
+      - name: Save npm cache
+        uses: actions/cache/save@v3
+        if: ${{ steps.npm-cache.outputs.cache-hit != 'true' }}
+        with:
+          path: App-Frontend/Frontend/node_modules
+          key: ${{ runner.os }}-npm-${{ hashFiles('App-Frontend/Frontend/package-lock.json') }}
+
       - name: Build Angular
         working-directory: App-Frontend/Frontend
         run: npm run build --if-present
 
+    
       # ---------------------------
       # BACKEND (DJANGO)
       # ---------------------------
@@ -40,6 +58,8 @@ jobs:
         with:
           python-version: "3.11"
           cache: "pip"
+          # FIX 3: Specify the path to the requirements.txt file for caching
+          cache-dependency-path: App-Backend/backend/requirements.txt
 
       - name: Install Backend dependencies
         working-directory: App-Backend/backend
@@ -54,3 +74,4 @@ jobs:
       - name: Django tests
         working-directory: App-Backend/backend
         run: python manage.py test
+        
