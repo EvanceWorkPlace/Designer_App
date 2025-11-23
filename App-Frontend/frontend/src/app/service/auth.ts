@@ -2,12 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
+import { HttpHeaders } from '@angular/common/http';
+
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
   private api = 'http://localhost:8000/api/accounts';
-
+  token$ = new BehaviorSubject<string | null>(localStorage.getItem('token'));
   constructor(private http: HttpClient) {}
 
   login(credentials: { username?: string; email?: string; password: string }) {
@@ -19,8 +22,10 @@ export class AuthService {
     );
   }
 
-  register(data: any) {
-    return this.http.post(`${this.api}/register/`, data);
+  register(payload: any) {
+    // return this.http.post(`${this.api}/register/`, data);
+      
+      return this.http.post(`${this.api}/auth/register/`, payload);
   }
 
   logout() {
@@ -28,6 +33,9 @@ export class AuthService {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
 
+    localStorage.removeItem('token');
+    
+  
     if (refresh) {
       this.http.post(`${this.api}/logout/`, { refresh }).subscribe();
     }
@@ -54,6 +62,29 @@ export class AuthService {
   }
   getMe() {
   return this.http.get(`${this.api}/me/`);
+  }
+
+ 
+  get authHeaders() {
+  const token = localStorage.getItem('access');
+
+  return token
+    ? new HttpHeaders({ Authorization: `Bearer ${token}` })
+    : new HttpHeaders(); // empty but valid
 }
 
+
+//#######
+
+
+// src/app/auth/auth.service.ts
+
+
 }
+
+
+
+
+//######
+
+

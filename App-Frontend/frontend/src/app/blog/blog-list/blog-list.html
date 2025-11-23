@@ -1,0 +1,7 @@
+<h2>Blog Posts</h2>
+
+<ul>
+  <li *ngFor="let p of [1,2,3]">
+    <a [routerLink]="['/blog', p]">Blog Post {{ p }}</a>
+  </li>
+</ul>
